@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="css/style1.css">
+    <title>FishApp</title>
+    <link rel="stylesheet" href="css/style.css">
     <style>
        body {
     background-size: cover;
@@ -18,7 +18,7 @@
 </head>
 <body style="background-image: url('img/bgbunga.jpg')">
     <div class="rectangle">
-        <img src="img/logo.png" alt="logo">
+      <img src="img/logo.png" alt="logo">
         <div class="user-actions">
           <a href="{{ route('login') }}">Log-In</a>
          <button id="registerBtn">Register</button>
@@ -26,71 +26,44 @@
      <nav class="navbar navbar-expand-lg">
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item"> <!-- Tambahkan class 'active' pada link yang sesuai dengan halaman saat ini -->
+          <li class="nav-item active"> <!-- Tambahkan class 'active' pada link yang sesuai dengan halaman saat ini -->
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Produk</a>
+            <a class="nav-link" href="/produk">Produk</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Berita</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Tentang kami</a>
+            <a class="nav-link" href="#">Tentang Kami</a>
           </li>
         </ul>
       </div>
     </nav>   
       </div>
-      <div class="kotak">
-        <h1>Login</h1>
-        <p>Masukkan email dan password</p>
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-            <!-- Email Address -->
-            <div class="custom-form-group">
-                <x-input-label for="email" :value="__('Masukan Email')" />
-                <x-text-input id="email" class="cmt-4" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-            </div>
-            
-            <!-- Password -->
-            <div class="mt-4 custom-form-group">
-                <x-input-label for="password" :value="__('Password')" />
-                <x-text-input id="password" class="cmt-4" type="password" name="password" required autocomplete="current-password" />
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
-            
-    
-            <!-- Remember Me -->
-            <div class="flex-container mt-4">
-                <div class="block">
-                    <label for="remember_me" class="inline-flex items-center custom-checkbox">
-                        <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                        <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                    </label>
+      <img src="img/Titik-titik.svg" alt="Titik-titik" class="dot-image1">
+      <div class="product" style="margin-top: -900px">
+        @foreach ($bungas as $bunga)
+        <div class="produk">
+            <div class="card" style="width: 18rem; float: left; margin: 40px;">
+                <img src="img/{{ $bunga->gambar}}" class="card-img-top" alt="{{ $bunga->nama }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $bunga->nama }}</h5>
+                    <p class="card-text">Rp {{ number_format($bunga->harga, 2, ',', '.') }}</p>
+                    <a href="#" class="btn btn-warning">Detail</a>
+                    <a href="#" class="btn btn-danger">Beli</a>
                 </div>
-            
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                        {{ __('lupa kata sandi?') }}
-                    </a>
-                @endif
-            </div>                    
-                <button class="ms-3">
-                    {{ __('Login') }}
-                </button>
             </div>
-        </form>  
-      </div>
+        </div>
+    @endforeach
+    </div>
     <footer>
       <div class="kotakfooter">
           <img src="img/Group 240.svg" alt="elemen">
       </div>
       <div class="contentfooter">
-        <p>solusi inovatif yang dirancang <br>untuk membantu Pemilik Bunga<br>guna meningkatkan Tanaman Mereka</p>
+          <p>solusi inovatif yang dirancang <br>untuk membantu Pemilik Bunga<br>guna meningkatkan Tanaman Mereka</p>
       </div>
       <div class="buton1">
           <button id="registersekarang">Register Sekarang</button>
@@ -137,10 +110,19 @@
           </ul>
       </div>
   </footer>
+  <script src="js/slider.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
       document.getElementById('registerBtn').addEventListener('click', function() {
           window.location.href = "{{ route('register') }}";
       });
   </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+

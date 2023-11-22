@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Models\bunga;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+Route::get('/produk', function () {
+    return view('produk');
 });
 
 Route::get('/dashboard', function () {
@@ -29,3 +36,13 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/produk', function () {
+        $bungas = bunga::all(); // Mengambil semua data produk dari tabel Bunga
+        return view('produk', compact('bungas'));
+    });
+
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->middleware(['auth:admin', 'admin.verified'])->name('admin.dashboard');
+require __DIR__.'/adminauth.php';
